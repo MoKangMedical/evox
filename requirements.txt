@@ -10,7 +10,7 @@ lxml==4.9.3
 selenium==4.15.2
 playwright==1.40.0
 elasticsearch==8.11.0
-redis==5.0.1
+redis==7.4.0
 celery==5.3.4
 numpy==1.26.2
 pandas==2.1.3
