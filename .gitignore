@@ -6,3 +6,9 @@ _data/
 node_modules/
 dist/
 .cache/
+.env.local
+.env.*.local
+*.key
+*.pem
+*_secret*
+credentials.json
