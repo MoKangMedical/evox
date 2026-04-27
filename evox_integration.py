@@ -29,7 +29,9 @@ from typing import Optional
 EVOAGENTX_AVAILABLE = False
 try:
     import sys
-    evox_path = os.path.expanduser("~/EvoAgentX")
+    evox_path = os.path.expanduser("~/Desktop/OPC/evoagentx")
+    if not os.path.exists(evox_path):
+        evox_path = os.path.expanduser("~/EvoAgentX")
     venv_path = os.path.join(evox_path, "venv", "lib")
     # 尝试导入
     sys.path.insert(0, evox_path)
