@@ -106,7 +106,6 @@ footer{border-top:1px solid var(--border);padding:48px 32px 28px;max-width:1200p
 @media(max-width:768px){.nav-links{display:none}.nav-mobile{display:block}.stats-bar{gap:20px}.stat-item .num{font-size:24px}.feature-grid,.pricing-grid{grid-template-columns:1fr}.chart-row{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr;gap:24px}.demo-input-area{flex-direction:column}}
 @media(max-width:480px){.hero h1{font-size:28px}.section{padding:40px 16px}.footer-grid{grid-template-columns:1fr}}
 </style>
-<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
 </head>
 <body>
 
@@ -251,7 +250,54 @@ footer{border-top:1px solid var(--border);padding:48px 32px 28px;max-width:1200p
 </div>
 </section>
 
-<footer>
+    <section id="pricing" style="padding:100px 0;background:#0a0e1a">
+        <div style="max-width:1200px;margin:0 auto;padding:0 24px">
+            <div style="text-align:center;margin-bottom:60px">
+                <h2 style="font-size:2.5rem;font-weight:700;margin-bottom:16px;color:#fff">Pricing</h2>
+                <p style="font-size:1.1rem;color:#94a3b8;max-width:560px;margin:0 auto">选择适合您的进化计算方案</p>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;max-width:1000px;margin:0 auto">
+                <div style="background:#111827;border:1px solid #1e293b;border-radius:16px;padding:40px 32px;transition:all .3s">
+                    <h3 style="font-size:1.1rem;font-weight:600;color:#94a3b8;margin-bottom:8px">Starter</h3>
+                    <div style="font-size:2.5rem;font-weight:800;color:#fff;margin-bottom:4px">$0<span style="font-size:1rem;color:#64748b;font-weight:400">/mo</span></div>
+                    <p style="color:#64748b;font-size:14px;margin-bottom:24px">适合个人研究者入门</p>
+                    <ul style="list-style:none;padding:0;margin:0 0 32px">
+                        <li style="color:#cbd5e1;font-size:14px;padding:6px 0;display:flex;align-items:center;gap:8px"><span style="color:#6366f1">&#10003;</span> 3 个基础优化算法</li>
+                        <li style="color:#cbd5e1;font-size:14px;padding:6px 0;display:flex;align-items:center;gap:8px"><span style="color:#6366f1">&#10003;</span> 单目标优化支持</li>
+                        <li style="color:#cbd5e1;font-size:14px;padding:6px 0;display:flex;align-items:center;gap:8px"><span style="color:#6366f1">&#10003;</span> 社区支持</li>
+                    </ul>
+                    <a href="https://github.com/MoKangMedical/evox" style="display:block;text-align:center;padding:12px 24px;border-radius:10px;font-weight:600;font-size:14px;text-decoration:none;color:#fff;background:transparent;border:1px solid #1e293b;transition:all .2s">Get Started</a>
+                </div>
+                <div style="background:#111827;border:2px solid #6366f1;border-radius:16px;padding:40px 32px;position:relative;transform:scale(1.02)">
+                    <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;padding:4px 16px;border-radius:20px;font-size:12px;font-weight:600">Most Popular</div>
+                    <h3 style="font-size:1.1rem;font-weight:600;color:#6366f1;margin-bottom:8px">Professional</h3>
+                    <div style="font-size:2.5rem;font-weight:800;color:#fff;margin-bottom:4px">$79<span style="font-size:1rem;color:#64748b;font-weight:400">/mo</span></div>
+                    <p style="color:#64748b;font-size:14px;margin-bottom:24px">适合研究团队深度优化</p>
+                    <ul style="list-style:none;padding:0;margin:0 0 32px">
+                        <li style="color:#cbd5e1;font-size:14px;padding:6px 0;display:flex;align-items:center;gap:8px"><span style="color:#6366f1">&#10003;</span> 全部优化算法库</li>
+                        <li style="color:#cbd5e1;font-size:14px;padding:6px 0;display:flex;align-items:center;gap:8px"><span style="color:#6366f1">&#10003;</span> 多目标优化 & 并行计算</li>
+                        <li style="color:#cbd5e1;font-size:14px;padding:6px 0;display:flex;align-items:center;gap:8px"><span style="color:#6366f1">&#10003;</span> 自适应参数调优</li>
+                        <li style="color:#cbd5e1;font-size:14px;padding:6px 0;display:flex;align-items:center;gap:8px"><span style="color:#6366f1">&#10003;</span> 优先邮件支持</li>
+                    </ul>
+                    <a href="https://github.com/MoKangMedical/evox" style="display:block;text-align:center;padding:12px 24px;border-radius:10px;font-weight:600;font-size:14px;text-decoration:none;color:#fff;background:#6366f1;border:none;transition:all .2s">Get Started</a>
+                </div>
+                <div style="background:#111827;border:1px solid #1e293b;border-radius:16px;padding:40px 32px;transition:all .3s">
+                    <h3 style="font-size:1.1rem;font-weight:600;color:#94a3b8;margin-bottom:8px">Enterprise</h3>
+                    <div style="font-size:2.5rem;font-weight:800;color:#fff;margin-bottom:4px">$299<span style="font-size:1rem;color:#64748b;font-weight:400">/mo</span></div>
+                    <p style="color:#64748b;font-size:14px;margin-bottom:24px">适合企业级大规模优化</p>
+                    <ul style="list-style:none;padding:0;margin:0 0 32px">
+                        <li style="color:#cbd5e1;font-size:14px;padding:6px 0;display:flex;align-items:center;gap:8px"><span style="color:#6366f1">&#10003;</span> 所有 Professional 功能</li>
+                        <li style="color:#cbd5e1;font-size:14px;padding:6px 0;display:flex;align-items:center;gap:8px"><span style="color:#6366f1">&#10003;</span> GPU 集群加速</li>
+                        <li style="color:#cbd5e1;font-size:14px;padding:6px 0;display:flex;align-items:center;gap:8px"><span style="color:#6366f1">&#10003;</span> 自定义算法集成</li>
+                        <li style="color:#cbd5e1;font-size:14px;padding:6px 0;display:flex;align-items:center;gap:8px"><span style="color:#6366f1">&#10003;</span> 专属客户经理</li>
+                        <li style="color:#cbd5e1;font-size:14px;padding:6px 0;display:flex;align-items:center;gap:8px"><span style="color:#6366f1">&#10003;</span> SLA 保障</li>
+                    </ul>
+                    <a href="https://github.com/MoKangMedical/evox" style="display:block;text-align:center;padding:12px 24px;border-radius:10px;font-weight:600;font-size:14px;text-decoration:none;color:#fff;background:transparent;border:1px solid #1e293b;transition:all .2s">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
 <div class="footer-grid">
   <div class="footer-brand">
     <h3>🧬 Evo<span style="color:var(--accent2)">X</span></h3>
