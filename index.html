@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EvoX — Evolution Engine Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0a0a0f;
+      color: #e0e0e8;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .header {
+      text-align: center;
+      padding: 40px 20px 20px;
+    }
+    .header h1 {
+      font-size: 2.6rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #00d4ff 0%, #7b2fff 50%, #00d4ff 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 4s ease infinite;
+      letter-spacing: -0.02em;
+    }
+    .header p {
+      color: #8888a0;
+      margin-top: 8px;
+      font-size: 1.05rem;
+    }
+    .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .badge-darwin  { background: rgba(0,212,255,0.12); color: #00d4ff; border: 1px solid rgba(0,212,255,0.3); }
+    .badge-evoprompt { background: rgba(123,47,255,0.12); color: #a78bfa; border: 1px solid rgba(123,47,255,0.3); }
+    .badge-sew     { background: rgba(16,185,129,0.12); color: #34d399; border: 1px solid rgba(16,185,129,0.3); }
+
+    @keyframes gradientShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .dashboard {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 20px 24px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .card {
+      background: rgba(16, 16, 28, 0.85);
+      border: 1px solid rgba(0, 212, 255, 0.1);
+      border-radius: 16px;
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      border-color: rgba(0, 212, 255, 0.35);
+      box-shadow: 0 0 30px rgba(0, 212, 255, 0.08);
+    }
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #00d4ff;
+      margin-bottom: 4px;
+    }
+    .card-subtitle {
+      font-size: 0.82rem;
+      color: #6a6a80;
+      margin-bottom: 16px;
+    }
+    .card canvas {
+      width: 100% !important;
+    }
+    .card-full {
+      grid-column: 1 / -1;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      grid-column: 1 / -1;
+    }
+    .stat-card {
+      background: rgba(16, 16, 28, 0.85);
+      border: 1px solid rgba(0, 212, 255, 0.08);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+    .stat-card:hover { transform: translateY(-2px); }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #00d4ff;
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      color: #6a6a80;
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    @media (max-width: 800px) {
+      .dashboard { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .header h1 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>EvoX Evolution Engine</h1>
+  <p>Three-Layer Self-Evolution — Darwin · EvoPrompt · SEW</p>
+  <div class="badge-row">
+    <span class="badge badge-darwin">Layer 1 Darwin</span>
+    <span class="badge badge-evoprompt">Layer 2 EvoPrompt</span>
+    <span class="badge badge-sew">Layer 3 SEW</span>
+  </div>
+</div>
+
+<div class="dashboard">
+
+  <!-- KPI Stats -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-value">+19</div>
+      <div class="stat-label">Avg Score Gain</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">6</div>
+      <div class="stat-label">Projects Evolved</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">0</div>
+      <div class="stat-label">Rollbacks</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">8</div>
+      <div class="stat-label">Scoring Dimensions</div>
+    </div>
+  </div>
+
+  <!-- Chart 1: Radar — Darwin 8-Dimension Scores -->
+  <div class="card">
+    <div class="card-title">Darwin 8-Dimension Scoring</div>
+    <div class="card-subtitle">Multi-axis radar comparing before vs. after evolution</div>
+    <canvas id="radarChart"></canvas>
+  </div>
+
+  <!-- Chart 2: Line — Convergence Over Rounds -->
+  <div class="card">
+    <div class="card-title">Evolutionary Convergence</div>
+    <div class="card-subtitle">Score progression across 5 evolution rounds</div>
+    <canvas id="convergenceChart"></canvas>
+  </div>
+
+  <!-- Chart 3: Bar — Multi-Project Benchmark -->
+  <div class="card card-full">
+    <div class="card-title">Multi-Project Benchmark Comparison</div>
+    <div class="card-subtitle">Before vs. after scores across the 6-project matrix</div>
+    <canvas id="benchmarkChart"></canvas>
+  </div>
+
+</div>
+
+<script>
+  // =====================================================
+  // Shared defaults
+  // =====================================================
+  Chart.defaults.color = '#8888a0';
+  Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
+  Chart.defaults.font.family = "'Segoe UI', system-ui, sans-serif";
+
+  const ACCENT       = '#00d4ff';
+  const ACCENT_FADED = 'rgba(0, 212, 255, 0.25)';
+  const PURPLE       = '#7b2fff';
+  const PURPLE_FADED = 'rgba(123, 47, 255, 0.25)';
+  const GREEN        = '#10b981';
+  const GREEN_FADED  = 'rgba(16, 185, 129, 0.25)';
+  const GRID_COLOR   = 'rgba(255,255,255,0.07)';
+
+  // =====================================================
+  // Chart 1 — Radar: 8 Darwin Dimensions
+  // =====================================================
+  const radarCtx = document.getElementById('radarChart').getContext('2d');
+  new Chart(radarCtx, {
+    type: 'radar',
+    data: {
+      labels: [
+        'Frontmatter',
+        'Workflow Clarity',
+        'Error Handling',
+        'Checkpoints',
+        'Specificity',
+        'Path Integrity',
+        'Architecture',
+        'Real-World Output'
+      ],
+      datasets: [
+        {
+          label: 'Before Evolution',
+          data: [4, 7, 5, 3, 8, 3, 7, 14],
+          borderColor: 'rgba(255, 100, 100, 0.8)',
+          backgroundColor: 'rgba(255, 100, 100, 0.1)',
+          borderWidth: 2,
+          pointBackgroundColor: 'rgba(255, 100, 100, 0.9)',
+          pointBorderColor: '#0a0a0f',
+          pointRadius: 4,
+          pointHoverRadius: 7,
+        },
+        {
+          label: 'After Evolution',
+          data: [8, 13, 9, 7, 14, 5, 14, 23],
+          borderColor: ACCENT,
+          backgroundColor: ACCENT_FADED,
+          borderWidth: 2,
+          pointBackgroundColor: ACCENT,
+          pointBorderColor: '#0a0a0f',
+          pointRadius: 4,
+          pointHoverRadius: 7,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      animation: {
+        duration: 1800,
+        easing: 'easeOutQuart',
+      },
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { padding: 20, usePointStyle: true, pointStyle: 'circle' }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(10,10,15,0.92)',
+          titleColor: '#fff',
+          bodyColor: '#ccc',
+          borderColor: ACCENT,
+          borderWidth: 1,
+          cornerRadius: 8,
+          padding: 12,
+          callbacks: {
+            label: ctx => `${ctx.dataset.label}: ${ctx.raw} / ${[8,15,10,7,15,5,15,25][ctx.dataIndex]}`
+          }
+        }
+      },
+      scales: {
+        r: {
+          beginAtZero: true,
+          max: 25,
+          ticks: { stepSize: 5, display: false },
+          grid: { color: GRID_COLOR },
+          angleLines: { color: GRID_COLOR },
+          pointLabels: {
+            color: '#aaa',
+            font: { size: 11 }
+          }
+        }
+      }
+    }
+  });
+
+  // =====================================================
+  // Chart 2 — Line: Convergence over Rounds
+  // =====================================================
+  const convCtx = document.getElementById('convergenceChart').getContext('2d');
+  const convGradient = convCtx.createLinearGradient(0, 0, 0, 300);
+  convGradient.addColorStop(0, 'rgba(0, 212, 255, 0.35)');
+  convGradient.addColorStop(1, 'rgba(0, 212, 255, 0.0)');
+
+  const convGradient2 = convCtx.createLinearGradient(0, 0, 0, 300);
+  convGradient2.addColorStop(0, 'rgba(123, 47, 255, 0.25)');
+  convGradient2.addColorStop(1, 'rgba(123, 47, 255, 0.0)');
+
+  new Chart(convCtx, {
+    type: 'line',
+    data: {
+      labels: ['Round 1', 'Round 2', 'Round 3', 'Round 4', 'Round 5'],
+      datasets: [
+        {
+          label: 'MediChat-RD',
+          data: [62, 69, 74, 80, 84],
+          borderColor: ACCENT,
+          backgroundColor: convGradient,
+          fill: true,
+          tension: 0.4,
+          borderWidth: 2.5,
+          pointBackgroundColor: ACCENT,
+          pointBorderColor: '#0a0a0f',
+          pointBorderWidth: 2,
+          pointRadius: 5,
+          pointHoverRadius: 8,
+        },
+        {
+          label: 'PharmaSim',
+          data: [58, 63, 66, 72, 76],
+          borderColor: PURPLE,
+          backgroundColor: convGradient2,
+          fill: true,
+          tension: 0.4,
+          borderWidth: 2.5,
+          pointBackgroundColor: PURPLE,
+          pointBorderColor: '#0a0a0f',
+          pointBorderWidth: 2,
+          pointRadius: 5,
+          pointHoverRadius: 8,
+        },
+        {
+          label: 'KnowHealth',
+          data: [55, 60, 64, 67, 71],
+          borderColor: GREEN,
+          backgroundColor: 'transparent',
+          fill: false,
+          tension: 0.4,
+          borderWidth: 2,
+          borderDash: [6, 3],
+          pointBackgroundColor: GREEN,
+          pointBorderColor: '#0a0a0f',
+          pointBorderWidth: 2,
+          pointRadius: 4,
+          pointHoverRadius: 7,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      animation: {
+        duration: 2000,
+        easing: 'easeOutQuart',
+      },
+      interaction: {
+        mode: 'index',
+        intersect: false,
+      },
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { padding: 20, usePointStyle: true, pointStyle: 'circle' }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(10,10,15,0.92)',
+          titleColor: '#fff',
+          bodyColor: '#ccc',
+          borderColor: ACCENT,
+          borderWidth: 1,
+          cornerRadius: 8,
+          padding: 12,
+          callbacks: {
+            label: ctx => `${ctx.dataset.label}: ${ctx.raw} pts`
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: GRID_COLOR },
+          ticks: { color: '#8888a0' }
+        },
+        y: {
+          beginAtZero: false,
+          min: 40,
+          max: 100,
+          grid: { color: GRID_COLOR },
+          ticks: {
+            color: '#8888a0',
+            callback: v => v + ' pts'
+          }
+        }
+      }
+    }
+  });
+
+  // =====================================================
+  // Chart 3 — Grouped Bar: Multi-Project Benchmark
+  // =====================================================
+  const benchCtx = document.getElementById('benchmarkChart').getContext('2d');
+  new Chart(benchCtx, {
+    type: 'bar',
+    data: {
+      labels: ['MediChat-RD', 'PharmaSim', 'KnowHealth', 'MetaForge', 'GlobalApp', 'SEW-Flow'],
+      datasets: [
+        {
+          label: 'Before Evolution',
+          data: [62, 58, 55, 60, 53, 57],
+          backgroundColor: 'rgba(255, 100, 100, 0.6)',
+          borderColor: 'rgba(255, 100, 100, 0.9)',
+          borderWidth: 1,
+          borderRadius: 6,
+          hoverBackgroundColor: 'rgba(255, 100, 100, 0.85)',
+        },
+        {
+          label: 'After Evolution',
+          data: [84, 76, 71, 79, 70, 74],
+          backgroundColor: ACCENT_FADED,
+          borderColor: ACCENT,
+          borderWidth: 1,
+          borderRadius: 6,
+          hoverBackgroundColor: 'rgba(0, 212, 255, 0.55)',
+        },
+        {
+          label: 'Improvement',
+          data: [22, 18, 16, 19, 17, 17],
+          backgroundColor: 'rgba(16, 185, 129, 0.35)',
+          borderColor: GREEN,
+          borderWidth: 1,
+          borderRadius: 6,
+          hoverBackgroundColor: 'rgba(16, 185, 129, 0.55)',
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      animation: {
+        duration: 1600,
+        easing: 'easeOutQuart',
+        delay: ctx => ctx.dataIndex * 80 + ctx.datasetIndex * 200,
+      },
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { padding: 20, usePointStyle: true, pointStyle: 'rectRounded' }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(10,10,15,0.92)',
+          titleColor: '#fff',
+          bodyColor: '#ccc',
+          borderColor: ACCENT,
+          borderWidth: 1,
+          cornerRadius: 8,
+          padding: 12,
+          callbacks: {
+            label: ctx => {
+              const suffix = ctx.dataset.label === 'Improvement' ? ' (+)' : '';
+              return `${ctx.dataset.label}: ${ctx.raw} pts${suffix}`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          ticks: { color: '#8888a0', font: { weight: '500' } }
+        },
+        y: {
+          beginAtZero: true,
+          max: 100,
+          grid: { color: GRID_COLOR },
+          ticks: {
+            color: '#8888a0',
+            callback: v => v + ' pts'
+          }
+        }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
